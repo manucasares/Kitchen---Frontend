@@ -1,0 +1,47 @@
+
+
+.add-item-window {
+    background-color: #cccccc;
+    width: 40%;
+    padding: 15px 50px;
+    border-radius: 5px;
+    .form {
+        
+        div {
+            display: flex;
+            flex-direction: column;
+            margin: .7rem 0;
+            p {
+                margin-bottom: .2rem;
+
+            }
+
+            input {
+                border: none;
+                background-color: #f4f4f4;
+            }
+        }
+        
+        input, button {
+            border-radius: 2px;
+            padding: 7px 10px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: #26874E;
+            border: none;
+            color: #f4f4f4;
+            font-size: 1.1rem;
+            margin-bottom: .7rem;
+
+            cursor: pointer;
+
+            transition: $transition;
+            &:hover {
+                background-color: lighten($color: #26874E, $amount: 5);
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+
+.auth-window {
+
+    .logo-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        
+        .logo {
+            width: 40px;
+        }
+        h2 {
+            color: $title;
+        }
+    }
+
+}
+

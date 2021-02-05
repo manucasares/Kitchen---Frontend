@@ -1,0 +1,42 @@
+
+
+@mixin auth-form() {
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0;
+
+        input, button {
+            margin: 5px 0;
+            border: none;
+            padding: 7px 15px;
+            outline: none;
+        }
+
+        input {
+            background-color: #DEDEDE;
+            color: #555;
+        }
+
+        button {
+            background-color: $red;
+            color: #FEFEFE;
+
+            transition: $transition;
+            &:hover {
+                background-color: darken($color: $red, $amount: 10);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .link {
+        color: #4D807C;
+        margin-top: 300px;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

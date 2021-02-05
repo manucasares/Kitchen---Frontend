@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+html, body {
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+}
+
+html, body, h2, h3, h4, p {
+    margin: 0;
+}
+
+.auth-background {
+    background: url('../../images/login-background.jpg') no-repeat center center / cover;
+    height: 100vh;
+}
+
+.auth-window {
+    background-color: #FBFBFB;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 40px;
+    width: 20%;
+    text-align: center;
+
+    @include auth-form();
+}
+
+.container {
+    max-width: 1200px;
+    width: 80%;
+    margin: 0 auto;
+}

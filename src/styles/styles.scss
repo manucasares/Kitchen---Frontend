@@ -1,0 +1,20 @@
+
+
+// Base
+
+@import '../styles/base/settings.scss';
+@import '../styles/base/mixins';
+@import '../styles/base/base.scss';
+
+
+// Components
+
+    // auth
+@import '../styles/components/auth/login-screen';
+@import '../styles/components/auth/register-screen';
+@import '../styles/components/spinner';
+
+    // inventory
+@import '../styles/components/inventory/navbar';
+@import '../styles/components/inventory/inventory-screen';
+@import '../styles/components/inventory/add-item';
