@@ -13,10 +13,12 @@ export const types = {
 
     inventSetActiveItem: '[Invent] Set active item',
     inventClearActiveEvent: '[Invent] Clear active event',
+    inventSetCategories: '[Invent] Set category',
     inventSetActiveCategory: '[Invent] Set active category',
     inventCreateItem: '[Invent] Create item',
     inventSetItem: '[Invent] Set item',
 
-
-
+    uiOpenNavbar: '[UI] Open navbar',
+    uiCloseNavbar: '[UI] Close navbar',
+    uiToggleNavbar: '[UI] Toggle navbar',
 }

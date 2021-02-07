@@ -39,6 +39,7 @@ export const startRegister = ( name, email, password ) => {
             localStorage.setItem( 'token', body.token );
             localStorage.setItem( 'token-init-date', new Date().getTime() );
 
+
             dispatch(
                 login( {
                     uid: body.uid,

@@ -12,7 +12,22 @@
         }
         h2 {
             color: $title;
+            text-align: center;
         }
+    }
+}
+
+@media screen and ( max-width: 1000px ) {
+
+    .auth-window .logo-title .logo {
+        border: 2px solid red;
+        display: none;
+    }
+
+    .auth-window .logo-title h2 {
+        width: 100%;
+        font-size: 1.3rem;
+        text-align: center;
     }
 
 }

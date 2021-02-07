@@ -55,10 +55,9 @@ export const startCreateItem = ( item ) => {
     }
 }
 
-export const startGetItems = ( uid ) => {
+export const startGetItems = () => {
 
     return async( dispatch ) => {
-
 
         try {
             
@@ -72,9 +71,81 @@ export const startGetItems = ( uid ) => {
         } catch (error) {
             console.log(error);    
         }
+    }
+}
+
+export const startUpdateItem = ( item ) => {
+
+    return async( dispatch ) => {
+
+        try {
+            
+            const resp = await fetchConToken( `invent/${ item.id }`, item, 'PUT' );
+            const body = await resp.json();
+    
+            if ( body.ok ) {
+
+                Swal.fire({
+                    text: 'Item updated successfully!',
+                    confirmButtonText: 'OK',
+                    icon: 'success',
+                    allowOutsideClick: false
+                }).then( (result) => {
+
+                        // Redirigimos a la url principal
+                    if ( result.isConfirmed ) {
+                        window.location = '/';
+                    }
+                });
+
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
 
     }
 }
+
+export const startDelete = ( id ) => {
+
+    return async( dispatch ) => {
+
+        
+        try {
+
+            const resp = await fetchConToken( `invent/${ id }`, {}, 'DELETE' );
+            const body = await resp.json();
+            
+
+            if ( body.ok ) {
+                Swal.fire({
+                    text: 'Your item was deleted successfully!',
+                    allowOutsideClick: false,
+                    icon: 'success'
+
+                }).then( ( resp ) => {
+                    if ( resp.isConfirmed ) {
+                        window.location = '/';
+                    }
+                } ) 
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    }
+
+}
+
+export const setCategories = ( categories ) => ({
+    type: types.inventSetCategories,
+    payload: categories
+})
+
 
 const createItem = ( item ) => ({
     type: types.inventCreateItem,

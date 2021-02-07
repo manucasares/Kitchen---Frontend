@@ -33,3 +33,19 @@ html, body, h2, h3, h4, p {
     width: 80%;
     margin: 0 auto;
 }
+
+@media screen and ( max-width: 930px ) {
+
+    .auth-window {
+        width: 30%;
+    }
+
+}
+
+@media screen and ( max-width: 700px ) {
+
+    .auth-window {
+        width: 45%;
+    }
+}
+

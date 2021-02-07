@@ -7,6 +7,8 @@
     .navbar-content {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        position: relative; 
         
         .logo-title {
             display: flex;
@@ -27,7 +29,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 40%;
+            width: 45%;
 
             button {
                 margin-left: .5rem;
@@ -54,6 +56,105 @@
                     background-color: $logout;
                 }
             }
+
+            .fa-times {
+                display: none;
+            }
+
+        }
+        .fa-bars {
+            display: none;
         }
     }
 }
+
+@media screen and ( max-width: 1150px ) {
+
+    .navbar .navbar-content .btn-container {
+        width: 55%;
+    }
+
+}
+
+@media screen and ( max-width: 900px ) {
+
+    .navbar .navbar-content .logo-title {
+        img {
+            display: none;
+        }
+    }
+}
+
+
+@media screen and ( max-width: 700px ) {
+
+
+    .navbar .navbar-content .logo-title {
+        width: 65%;
+    }
+
+    .navbar .navbar-content .btn-container {
+        position: fixed;
+        flex-direction: column;
+        justify-content: center;
+        left: 0;
+        top: 0;
+        width: 45vw;
+        height: 100vh;
+        background-color: darken($color: $red, $amount: 30);
+        z-index: 10;
+
+        transform: translateX( -100% );
+
+        transition: $transition;
+
+        button, .logout {
+            margin: 1rem 0;
+            color: #fff;
+            border: none;
+            background-color: transparent;
+            font-weight: 600;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+
+        .fa-times {
+            display: inline-block;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+    }
+
+    .navbar .navbar-content .fa-bars {
+        display: inline-block;
+        font-size: 1.3rem;
+    }
+
+
+}
+
+@media screen and ( max-width: 400px ) {
+
+    .navbar .navbar-content .logo-title {
+        display: none;
+    }
+
+    .navbar .navbar-content {
+        padding: 1.25rem 0;
+    }
+
+    .navbar .navbar-content .fa-bars {
+        position: absolute;
+        top: 50%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+
+    }
+
+}
+

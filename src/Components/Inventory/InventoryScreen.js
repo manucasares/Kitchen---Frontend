@@ -1,60 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-
-import { setActiveCategory, setActiveItem, startGetItems } from '../../actions/invent';
+import { useForm } from '../../hooks/useForm';
+import { setActiveCategory, setCategories, startGetItems } from '../../actions/invent';
+import { searchItems } from '../../helpers/searchItems';
+import { filterItemsByCategory } from '../../helpers/filterItemsByCategory';
+import { Items } from './Items';
 
 
 export const InventoryScreen = () => {
 
-    const { items, categories, active_category } = useSelector( state => state.invent );
+    const { items, active_category, categories } = useSelector( state => state.invent );
     const { uid } = useSelector( state => state.auth );
     const dispatch = useDispatch();
 
-    const [ showCog, setShowCog ] = useState();
-    const [ filteredItemsByCategory, setFilteredItemsByCategory ] = useState([]);
 
+    const [ { search }, handleInputChange ] = useForm({
+        search: ''
+    })
 
-        // Seteamos la active_category apenas se monte el componente.
+    const [ filteredItems, setFilteredItems ] = useState([]);
+
         // Leemos los items desde Mongo
     useEffect(() => {
+        dispatch( startGetItems() );
+    }, [ dispatch ])
 
-        if ( categories[0] ) {
-            dispatch( setActiveCategory( categories[0] ) )
-        }
-
-        dispatch( startGetItems( uid ) );
-    }, [ uid, categories, dispatch ])
-
+        // Definimos las categorías y seteamos la active_category
     useEffect(() => {
         
-        console.log(items);
-        console.log(`active category ${ active_category }`);
-        setFilteredItemsByCategory( items.filter( item => item.category === active_category ) );
+            // Definimos todas las categorias únicas
+        const categories = items.map( item => item.category );
+        const unique_categories = categories.filter( ( category, i, arr ) => arr.indexOf( category ) === i );
+    
+            // Agregamos 'Mostrar todo' como categoría
+        if ( unique_categories.length !== 0 )
+            unique_categories.unshift( 'Show all' );
 
-    }, [ items, active_category ])
+
+            // Seteamos la active_category apenas se monte el componente.
+        dispatch( setCategories( unique_categories ) );
+        dispatch( setActiveCategory( unique_categories[ 0 ] ) )
 
 
-    const handleInputChange = ( { target } ) => {
+    }, [ uid, dispatch, items ])
+
+        // Filtramos los items según la categoría
+    useEffect(() => {
+
+        setFilteredItems( filterItemsByCategory( items, active_category ) );
+
+        if ( search ) {
+            setFilteredItems( filteredItems => searchItems( filteredItems, search ) );
+        }
+
+    }, [ items, active_category, search ])
+
+        
+    const handleSelectChange = ( { target } ) => {
         dispatch( setActiveCategory( target.value ) )
     }
-
-    // Cog UI
-    const handleShowCog = ( id ) => {
-        setShowCog( id );
-    }
-
-    const handleHideCog = () => {
-        setShowCog( null );
-    }
-
-
-    const handleOpenItem = ( item ) => {
-
-        dispatch( setActiveItem( item ) );
-    }
-
 
 
     return (
@@ -62,26 +67,38 @@ export const InventoryScreen = () => {
             
             {
                 ( categories.length !== 0 ) &&
-                    <select
-                        className="select"
-                        value={ active_category }
-                        onChange={ handleInputChange }
-                    >
-                        
-                        {
-                            categories.map( category => (
+                    <>
+                        <select
+                            className="select"
+                            value={ active_category }
+                            onChange={ handleSelectChange }
+                        >
+                            
+                            {
+                                categories.map( category => (
+    
+                                    <option
+                                        key={ category }
+                                        value={ category }
+                                    >
+                                        { category }
+                                    </option>
+    
+                                ))
+                            }
+    
+                        </select>
 
-                                <option
-                                    key={ category }
-                                    value={ category }
-                                >
-                                    { category }
-                                </option>
-
-                            ))
-                        }
-
-                    </select>
+                        <input
+                            type="text"
+                            className="search-input"
+                            onChange={ handleInputChange }
+                            value={ search }
+                            name="search"
+                            autoComplete="off"
+                            placeholder="Search your item here..."
+                        />
+                    </>
             }
 
             <div className="item-container">
@@ -89,39 +106,9 @@ export const InventoryScreen = () => {
                 {
                     ( items.length === 0)
                         ? <p> There are no items in your inventory. </p>
-                        : filteredItemsByCategory.map( item => (
+                        : <Items items={ filteredItems } />
 
-                            <div
-                                className="item-card"
-                                key={ item.id }
-                                onMouseOver={ () => handleShowCog( item.id ) }
-                                onMouseLeave={ handleHideCog }
-                            >
-                                
-                                <div
-                                    className="img"
-                                    style={{
-                                        background: `url(${ item.url }) no-repeat center center / cover`
-                                    }}
-                                >
-    
-                                </div>
-    
-                                <div className="text-container">
-                                    {
-                                        ( item.id === showCog ) &&
-                                            <Link to="add">
-                                                <i
-                                                    className="fas fa-cog"
-                                                    onClick={ () => handleOpenItem( item ) }
-                                                ></i>
-                                            </Link>
-                                    }
-                                    <p className="name"> { item.name } </p>
-                                    <p className="quantity"> { item.quantity } { item.units } </p>
-                                </div>
-                            </div>
-                        ))
+                            
                 }
 
             </div>

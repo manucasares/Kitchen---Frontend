@@ -30,18 +30,36 @@
 
         button {
             width: 100%;
-            background-color: #26874E;
             border: none;
             color: #f4f4f4;
             font-size: 1.1rem;
             margin-bottom: .7rem;
-
             cursor: pointer;
 
             transition: $transition;
+        }
+
+        .btn-green {
+            background-color: #26874E;
             &:hover {
                 background-color: lighten($color: #26874E, $amount: 5);
             }
         }
+        
+        .btn-red {
+            background-color: #f54336;
+            &:hover {
+                background-color: darken($color: #f54336, $amount: 5);
+            }
+        }
     }
+}
+
+@media screen and ( max-width: 700px ) {
+
+    .add-item-window {
+        width: 60%;
+    }
+
+
 }

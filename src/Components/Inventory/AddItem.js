@@ -4,15 +4,15 @@ import Swal from 'sweetalert2';
 import { isURL } from 'validator';
 
 
-import { startCreateItem } from '../../actions/invent';
+import { startCreateItem, startDelete, startUpdateItem } from '../../actions/invent';
 
 
 const initFormValues = {
-    name: 'Manteca',
-    quantity: '150',
-    units: 'gr',
-    category: 'Lacteos',
-    url: 'https://img.huffingtonpost.com/asset/5e4fabd62300002d05ddd3bf.jpeg?ops=1200_630'
+    name: '',
+    quantity: '',
+    units: '',
+    category: '',
+    url: ''
 }
 
 export const AddItem = () => {
@@ -45,7 +45,6 @@ export const AddItem = () => {
     }
 
 
-
     const handleCreateOrUpdate = ( e ) => {
         e.preventDefault();
 
@@ -67,28 +66,43 @@ export const AddItem = () => {
             return;
         }
 
-
-
-            // Actualizamos
         if ( active_item ) {
-
-
-            // Creamos
+            
+                // Actualizamos
+            dispatch( startUpdateItem( formValues ) );
         } else {
-
+            
+                // Creamos
             dispatch( startCreateItem( formValues ) );
-
         }
+    }
+
+    const handleDelete = ( e ) => {
+        e.preventDefault();
+
+        Swal.fire({
+            text: 'Are you sure you want to delete this item permanently?',
+            showDenyButton: true,
+            denyButtonText: 'Delete',
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            allowOutsideClick: false,
+            showConfirmButton: false
+        }).then( ( resp ) => {
+            if ( resp.isDenied ) {
+
+                    // Eliminamos item
+                dispatch( startDelete( active_item.id ) );
+            }
+        })
+
     }
 
 
     return (
         <div className="add-item-window container">
         
-            <form
-                className="form"
-                onSubmit={ handleCreateOrUpdate }
-            >
+            <form className="form" >
 
                 <div>
                     <p> Item name: </p>
@@ -146,7 +160,20 @@ export const AddItem = () => {
                     />
                 </div>
 
-                <button type="submit">
+                {
+                    ( active_item ) &&
+                        <button
+                            className="btn-red"
+                            onClick={ handleDelete }
+                        >
+                            Delete item
+                        </button>
+                }
+
+                <button
+                    className="btn-green"
+                    onClick={ handleCreateOrUpdate }
+                >
                     
                     {
                         ( active_item )
