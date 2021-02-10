@@ -18,7 +18,6 @@ export const types = {
     inventCreateItem: '[Invent] Create item',
     inventSetItem: '[Invent] Set item',
 
-    uiOpenNavbar: '[UI] Open navbar',
     uiCloseNavbar: '[UI] Close navbar',
     uiToggleNavbar: '[UI] Toggle navbar',
 }

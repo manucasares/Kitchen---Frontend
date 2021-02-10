@@ -10,12 +10,6 @@ export const uiReducer = ( state = initialState, action ) => {
 
     switch ( action.type ) {
 
-        case types.uiOpenNavbar:
-            return {
-                ...state,
-                navbar_opened: true
-            };
-
         case types.uiCloseNavbar:
             return {
                 ...state,

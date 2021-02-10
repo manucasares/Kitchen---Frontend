@@ -11,11 +11,11 @@ export const AuthRouter = () => {
                 <div className="auth-window">
                     <Switch>
 
-                        <Route exact path="/login" component= { LoginScreen } />
+                        <Route exact path="/auth/login" component= { LoginScreen } />
 
-                        <Route exact path="/register" component= { RegisterScreen } />
+                        <Route exact path="/auth/register" component= { RegisterScreen } />
 
-                        <Redirect to="/login" />
+                        <Redirect to="/auth/login" />
 
                     </Switch>
                 </div>

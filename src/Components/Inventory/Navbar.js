@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { startLogout } from '../../actions/auth';
 import logo from '../../images/logo.png';
 import { clearActiveEvent } from '../../actions/invent';
-import { closeNavbar, openNavbar, toggleNavbar } from '../../actions/ui';
+import { closeNavbar, toggleNavbar } from '../../actions/ui';
 import { useWindowSize } from '../../hooks/useWindowSize';
 
 
@@ -37,7 +37,7 @@ export const Navbar = () => {
     useEffect(() => {
             // Esto lo hago para que siempre esté el transform translate en 0 si el width es mayor a 700px    
         if ( window_size[0] > 700 ) {
-            dispatch( openNavbar() )
+            dispatch( closeNavbar() )
         }
 
     }, [ window_size, dispatch ] )
@@ -57,9 +57,9 @@ export const Navbar = () => {
                     className="btn-container"
 
 
-                    style={ ( navbar_opened )
+                    style={ ( !navbar_opened )
                                 ? { transform: 'translateX( 0% )' }
-                                : { transform: 'translateX( -100% )' }
+                                : { transform: 'translateX( 100% )' }
                     }
                     
                 >

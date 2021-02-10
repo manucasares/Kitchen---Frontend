@@ -63,7 +63,7 @@ export const InventoryScreen = () => {
 
 
     return (
-        <div className="inventory-screen container">
+        <div className="inventory-screen container animate__animated animate__fadeIn">
             
             {
                 ( categories.length !== 0 ) &&
@@ -107,8 +107,6 @@ export const InventoryScreen = () => {
                     ( items.length === 0)
                         ? <p> There are no items in your inventory. </p>
                         : <Items items={ filteredItems } />
-
-                            
                 }
 
             </div>

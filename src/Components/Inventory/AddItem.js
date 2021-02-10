@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { isURL } from 'validator';
+
 
 
 import { startCreateItem, startDelete, startUpdateItem } from '../../actions/invent';
@@ -12,7 +12,6 @@ const initFormValues = {
     quantity: '',
     units: '',
     category: '',
-    url: ''
 }
 
 export const AddItem = () => {
@@ -22,7 +21,7 @@ export const AddItem = () => {
 
     const [ formValues, setFormValues ] = useState( initFormValues );
     
-    const { name, quantity, units, category, url } = formValues;
+    const { name, quantity, units, category } = formValues;
     
 
     useEffect(() => {
@@ -49,7 +48,7 @@ export const AddItem = () => {
         e.preventDefault();
 
             // Si hay campos vacíos
-        if ( [ name, quantity, units, category, url ].some( field => !field ) ) {
+        if ( [ name, quantity, units, category ].some( field => !field ) ) {
             Swal.fire( 'Error', 'There are empty fields.', 'error' );
             return;
         }
@@ -60,11 +59,6 @@ export const AddItem = () => {
             return;
         }
 
-            // Si no es una URL valida
-        if ( !isURL( url ) ) {
-            Swal.fire( 'Error', 'Image URL specified is not valid.', 'error' );
-            return;
-        }
 
         if ( active_item ) {
             
@@ -100,7 +94,7 @@ export const AddItem = () => {
 
 
     return (
-        <div className="add-item-window container">
+        <div className="add-item-window container animate__animated animate__fadeIn">
         
             <form className="form" >
 
@@ -112,6 +106,7 @@ export const AddItem = () => {
                         name="name"
                         onChange= { handleInputChange }
                         autoComplete="off"
+                        placeholder="Apple"
                     />
                 </div>
 
@@ -123,6 +118,7 @@ export const AddItem = () => {
                         name="quantity"
                         onChange= { handleInputChange }
                         autoComplete="off"
+                        placeholder="100"
                     />
                 </div>
 
@@ -134,6 +130,7 @@ export const AddItem = () => {
                         name="units"
                         onChange= { handleInputChange }
                         autoComplete="off"
+                        placeholder="gr"
                     />
                 </div>
 
@@ -145,20 +142,10 @@ export const AddItem = () => {
                         name="category"
                         onChange= { handleInputChange }
                         autoComplete="off"
+                        placeholder="Fruits"
                     />
                 </div>   
 
-                <div>
-                    <p> Image URL: </p>
-                    <input
-                        type="text"
-                        value={ url }
-                        name="url"
-                        onChange= { handleInputChange }
-                        autoComplete="off"
-                        placeholder="https://i.imgur.com/omKp4Lk.jpg"
-                    />
-                </div>
 
                 {
                     ( active_item ) &&

@@ -34,21 +34,19 @@ export const AppRouter = () => {
                 <Switch>
 
                     <PublicRoute
-                        exact
-                        path="/login"
+                        path="/auth"
                         component={ AuthRouter }
                         isAuthenticated= { !!uid }
                     />
 
                     <PrivateRoute
-                        exact
                         path="/"
                         component={ InventoryRouter }
                         isAuthenticated= { !!uid }
                     />
 
 
-                    <Redirect to="/login" />
+                    <Redirect to="/auth" />
 
                 </Switch>
             </div>

@@ -25,13 +25,28 @@ export const startCreateItem = ( item ) => {
 
         
         try {
-            const resp = await fetchConToken( 'invent', item, 'POST' );
-            const body = await resp.json();
             
-            if ( body.ok ) {
+            // Petición al traductor
+            const translatorResp = await fetch( `https://api.mymemory.translated.net/get?q=${ item.name }&langpair=es|en` );
+            const { responseData } = await translatorResp.json();
+            
+            // Peticion a unsplash para obtener la URL de la imagen a usar
+            const unsplashResp = await fetch( `https://api.unsplash.com/search/photos?query=${ responseData.translatedText }&client_id=x11nv0YULidFeAUN4HZ98bjcc9S5RlLUn5mfyAXeF18` );
+            const { results } = await unsplashResp.json();
+            
+                // Seteamos la url de unsplash a nuestro item 
+            item.url = results[0].urls.small;
+
+                // Petición a nuestro backend
+            const backendResp = await fetchConToken( 'invent', item, 'POST' );
+            const backendBody = await backendResp.json();
+            
+
+
+            if ( backendBody.ok ) {
 
                     // Agregamos al item el id proveido por Mongo y el uid
-                item.id = body.item.id;
+                item.id = backendBody.item.id;
                 item.uid = uid;
 
                 dispatch( createItem( item ) )
@@ -48,8 +63,9 @@ export const startCreateItem = ( item ) => {
                     }
                 });
             }
+
         } catch (error) {
-           
+            
             console.log(error);
         }
     }

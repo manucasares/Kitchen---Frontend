@@ -59,11 +59,13 @@
 
             .fa-times {
                 display: none;
+                cursor: pointer;
             }
 
         }
         .fa-bars {
             display: none;
+            cursor: pointer;
         }
     }
 }
@@ -85,7 +87,6 @@
     }
 }
 
-
 @media screen and ( max-width: 700px ) {
 
 
@@ -97,9 +98,9 @@
         position: fixed;
         flex-direction: column;
         justify-content: center;
-        left: 0;
+        left: -40%;
         top: 0;
-        width: 45vw;
+        width: 40vw;
         height: 100vh;
         background-color: darken($color: $red, $amount: 30);
         z-index: 10;
