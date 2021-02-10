@@ -27,8 +27,10 @@ export const startCreateItem = ( item ) => {
         try {
             
             // Petición al traductor
-            const translatorResp = await fetch( `https://api.mymemory.translated.net/get?q=${ item.name }&langpair=es|en` );
+            const translatorResp = await fetch( `https://api.mymemory.translated.net/get?q=${ item.name.toLowerCase() }&langpair=es|en` );
             const { responseData } = await translatorResp.json();
+
+            console.log(responseData.translatedText);
             
             // Peticion a unsplash para obtener la URL de la imagen a usar
             const unsplashResp = await fetch( `https://api.unsplash.com/search/photos?query=${ responseData.translatedText }&client_id=x11nv0YULidFeAUN4HZ98bjcc9S5RlLUn5mfyAXeF18` );
