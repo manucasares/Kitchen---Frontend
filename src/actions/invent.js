@@ -21,34 +21,25 @@ export const startCreateItem = ( item ) => {
     return async( dispatch, getState ) => {
 
         const { uid } = getState().auth;
+        const { active_image } = getState().invent;
 
 
         
         try {
             
-            // Petición al traductor
-            const translatorResp = await fetch( `https://api.mymemory.translated.net/get?q=${ item.name.toLowerCase() }&langpair=es|en` );
-            const { responseData } = await translatorResp.json();
-
-            console.log(responseData.translatedText);
-            
-            // Peticion a unsplash para obtener la URL de la imagen a usar
-            const unsplashResp = await fetch( `https://api.unsplash.com/search/photos?query=${ responseData.translatedText }&client_id=x11nv0YULidFeAUN4HZ98bjcc9S5RlLUn5mfyAXeF18` );
-            const { results } = await unsplashResp.json();
-            
-                // Seteamos la url de unsplash a nuestro item 
-            item.url = results[0].urls.small;
+                // Seteamos la url de la imagen
+            item.url = active_image;
 
                 // Petición a nuestro backend
-            const backendResp = await fetchConToken( 'invent', item, 'POST' );
-            const backendBody = await backendResp.json();
+            const resp = await fetchConToken( 'invent', item, 'POST' );
+            const body = await resp.json();
             
 
 
-            if ( backendBody.ok ) {
+            if ( body.ok ) {
 
                     // Agregamos al item el id proveido por Mongo y el uid
-                item.id = backendBody.item.id;
+                item.id = body.item.id;
                 item.uid = uid;
 
                 dispatch( createItem( item ) )
@@ -94,7 +85,7 @@ export const startGetItems = () => {
 
 export const startUpdateItem = ( item ) => {
 
-    return async( dispatch ) => {
+    return async() => {
 
         try {
             
@@ -164,6 +155,27 @@ export const setCategories = ( categories ) => ({
     payload: categories
 })
 
+export const startSearchImages = ( search ) => {
+
+    return async( dispatch ) => {
+
+
+            // Peticion a unsplash para obtener la URL de la imagen a usar
+
+        try {
+            
+            const resp = await fetch( `https://api.unsplash.com/search/photos?query=${ search }&client_id=x11nv0YULidFeAUN4HZ98bjcc9S5RlLUn5mfyAXeF18&per_page=18` );
+            const { results } = await resp.json();
+
+
+            dispatch( setImagesResults( results ) );
+
+        } catch (error) {
+            console.log(error);
+        }  
+    }
+}
+
 
 const createItem = ( item ) => ({
     type: types.inventCreateItem,
@@ -173,4 +185,14 @@ const createItem = ( item ) => ({
 const setItems = ( items ) => ({
     type: types.inventSetItem,
     payload: items
+})
+
+const setImagesResults = ( results ) => ({
+    type: types.inventSetImagesResults,
+    payload: results
+})
+
+export const setActiveImage = ( image_url ) => ({
+    type: types.inventSetActiveImage,
+    payload: image_url
 })

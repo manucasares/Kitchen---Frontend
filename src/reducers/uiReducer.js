@@ -2,7 +2,8 @@ import { types } from "../types/types";
 
 
 const initialState = {
-    navbar_opened: window.innerWidth >= 700
+    navbar_opened: window.innerWidth >= 700,
+    showSelectImageWindow: false
 }
 
 
@@ -20,6 +21,12 @@ export const uiReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 navbar_opened: !state.navbar_opened
+            }
+
+        case types.uiToggleSelectImage: 
+            return {
+                ...state,
+                showSelectImageWindow: !state.showSelectImageWindow
             }
     
         default:

@@ -1,0 +1,62 @@
+
+
+.select-image-background {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: #000000, $alpha: .6);
+    .select-image-container {
+        width: 60%;
+        height: 75%;
+        padding: 25px;
+        form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            text-align: center;
+            input {
+                width: 80%;
+            }
+        }
+
+        .search-results {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+            height: 75%;
+            .result {
+                width: 31.5%;
+                height: 150px;
+                margin: 5px 4px;
+                border-radius: 2px;
+                cursor: pointer;
+            }
+        }
+
+        button {
+            background-color: $red;
+            color: #FEFEFE;
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            border: none;
+            transition: $transition;
+            &:hover {
+                background-color: darken($color: $red, $amount: 10);
+                cursor: pointer;
+            }
+        }
+
+        .fa-times {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: rgb(93, 93, 93);
+            cursor: pointer;
+        }
+    }
+}

@@ -17,7 +17,11 @@ export const types = {
     inventSetActiveCategory: '[Invent] Set active category',
     inventCreateItem: '[Invent] Create item',
     inventSetItem: '[Invent] Set item',
+    inventSetImagesResults: '[Invent] Set images results',
+    inventSetActiveImage: '[Invent] Set active image',
+
 
     uiCloseNavbar: '[UI] Close navbar',
     uiToggleNavbar: '[UI] Toggle navbar',
+    uiToggleSelectImage: '[UI] Toggle select image',
 }

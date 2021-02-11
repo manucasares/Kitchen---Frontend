@@ -52,6 +52,18 @@ export const InventReducer = ( state = initialValue, action ) => {
                 ...state,
                 categories: action.payload
             }
+
+        case types.inventSetImagesResults:
+            return {
+                ...state,
+                images_results: action.payload
+            }
+
+        case types.inventSetActiveImage:
+            return {
+                ...state,
+                active_image: action.payload
+            }
     
         default:
             return state;

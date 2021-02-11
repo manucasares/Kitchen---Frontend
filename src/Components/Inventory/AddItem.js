@@ -4,19 +4,22 @@ import Swal from 'sweetalert2';
 
 
 
-import { startCreateItem, startDelete, startUpdateItem } from '../../actions/invent';
+import { startDelete, startUpdateItem } from '../../actions/invent';
+import { toggleSelectImage } from '../../actions/ui';
+import { SelectImageWindow } from './SelectImageWindow';
 
 
 const initFormValues = {
-    name: '',
-    quantity: '',
-    units: '',
-    category: '',
+    name: 'asd',
+    quantity: '1',
+    units: 'gr',
+    category: 'frut',
 }
 
 export const AddItem = () => {
 
     const { active_item } = useSelector( state => state.invent );
+    const { showSelectImageWindow } = useSelector( state => state.ui );
     const dispatch = useDispatch();
 
     const [ formValues, setFormValues ] = useState( initFormValues );
@@ -59,15 +62,25 @@ export const AddItem = () => {
             return;
         }
 
-
+            // Si está actualizando preguntamos si se quiere cambiar la foto
         if ( active_item ) {
-            
-                // Actualizamos
-            dispatch( startUpdateItem( formValues ) );
+            Swal.fire({
+                text: 'Would you like to update your item image?',
+                icon: 'question',
+                showConfirmButton: true,
+                showDenyButton: true,
+            }).then( res => {
+
+                if ( res.isDenied ) {
+                    formValues.url = active_item.url;
+                    dispatch( startUpdateItem( formValues ) );
+                } else if ( res.isConfirmed ) {
+                    dispatch( toggleSelectImage() );
+                }
+
+            })
         } else {
-            
-                // Creamos
-            dispatch( startCreateItem( formValues ) );
+            dispatch( toggleSelectImage() );
         }
     }
 
@@ -94,84 +107,93 @@ export const AddItem = () => {
 
 
     return (
-        <div className="add-item-window container animate__animated animate__fadeIn">
-        
-            <form className="form" >
-
-                <div>
-                    <p> Item name: </p>
-                    <input
-                        type="text"
-                        value={ name }
-                        name="name"
-                        onChange= { handleInputChange }
-                        autoComplete="off"
-                        placeholder="Apple"
-                    />
-                </div>
-
-                <div>
-                    <p> Item quantity: </p>
-                    <input
-                        type="text"
-                        value={ quantity }
-                        name="quantity"
-                        onChange= { handleInputChange }
-                        autoComplete="off"
-                        placeholder="100"
-                    />
-                </div>
-
-                <div>
-                    <p> Item units: </p>
-                    <input
-                        type="text"
-                        value={ units }
-                        name="units"
-                        onChange= { handleInputChange }
-                        autoComplete="off"
-                        placeholder="gr"
-                    />
-                </div>
-
-                <div>
-                    <p> Item category: </p>
-                    <input
-                        type="text"
-                        value={ category }
-                        name="category"
-                        onChange= { handleInputChange }
-                        autoComplete="off"
-                        placeholder="Fruits"
-                    />
-                </div>   
-
-
-                {
-                    ( active_item ) &&
-                        <button
-                            className="btn-red"
-                            onClick={ handleDelete }
-                        >
-                            Delete item
-                        </button>
-                }
-
-                <button
-                    className="btn-green"
-                    onClick={ handleCreateOrUpdate }
-                >
-                    
+        <>
+            <div className="add-item-window container animate__animated animate__fadeIn">
+            
+                <form className="form" >
+    
+                    <div>
+                        <p> Item name: </p>
+                        <input
+                            type="text"
+                            value={ name }
+                            name="name"
+                            onChange= { handleInputChange }
+                            autoComplete="off"
+                            placeholder="Apple"
+                        />
+                    </div>
+    
+                    <div>
+                        <p> Item quantity: </p>
+                        <input
+                            type="text"
+                            value={ quantity }
+                            name="quantity"
+                            onChange= { handleInputChange }
+                            autoComplete="off"
+                            placeholder="100"
+                        />
+                    </div>
+    
+                    <div>
+                        <p> Item units: </p>
+                        <input
+                            type="text"
+                            value={ units }
+                            name="units"
+                            onChange= { handleInputChange }
+                            autoComplete="off"
+                            placeholder="gr"
+                        />
+                    </div>
+    
+                    <div>
+                        <p> Item category: </p>
+                        <input
+                            type="text"
+                            value={ category }
+                            name="category"
+                            onChange= { handleInputChange }
+                            autoComplete="off"
+                            placeholder="Fruits"
+                        />
+                    </div>   
+    
+    
                     {
-                        ( active_item )
-                            ? 'Update item'
-                            : 'Create item'
+                        ( active_item ) &&
+                            <button
+                                className="btn-red"
+                                onClick={ handleDelete }
+                            >
+                                Delete item
+                            </button>
                     }
+    
+                    <button
+                        className="btn-green"
+                        onClick={ handleCreateOrUpdate }
+                    >
+                        
+                        {
+                            ( active_item )
+                                ? 'Update item'
+                                : 'Create item'
+                        }
+    
+                    </button>
+    
+                </form>
+    
+            </div>
 
-                </button>
-
-            </form>
-
-        </div>
+            {
+                ( showSelectImageWindow ) &&
+                    <SelectImageWindow
+                        formValues={ formValues }
+                    />
+            }
+        </>
     )
 }
