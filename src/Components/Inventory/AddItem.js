@@ -10,10 +10,10 @@ import { SelectImageWindow } from './SelectImageWindow';
 
 
 const initFormValues = {
-    name: 'asd',
-    quantity: '1',
-    units: 'gr',
-    category: 'frut',
+    name: '',
+    quantity: '',
+    units: '',
+    category: '',
 }
 
 export const AddItem = () => {
