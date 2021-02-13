@@ -3,7 +3,7 @@ import { types } from "../types/types";
 
 const initialState = {
     navbar_opened: window.innerWidth >= 700,
-    showSelectImageWindow: false
+    showSelectImageWindow: false,
 }
 
 
@@ -27,6 +27,18 @@ export const uiReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 showSelectImageWindow: !state.showSelectImageWindow
+            }
+
+        case types.uiShowSpinner:
+            return {
+                ...state,
+                spinnerShown: true
+            }
+
+        case types.uiHideSpinner:
+            return {
+                ...state,
+                spinnerShown: false
             }
     
         default:

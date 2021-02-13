@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { startSearchImages, setActiveImage, startUpdateItem, startCreateItem } from '../../actions/invent';
 import { toggleSelectImage } from '../../actions/ui';
+import { SpinnerSearchImage } from './SpinnerSearchImage';
 import { useForm } from '../../hooks/useForm';
 
 export const SelectImageWindow = ({ formValues }) => {
 
     const dispatch = useDispatch();
     const { images_results, active_image, active_item } = useSelector( state => state.invent );
+    const { spinnerShown } = useSelector( state => state.ui );
 
     const [ { search }, handleInputChange ] = useForm({
         search: ''
@@ -18,7 +20,6 @@ export const SelectImageWindow = ({ formValues }) => {
         e.preventDefault();
 
         dispatch( startSearchImages( search ) );
-
     }
 
     const closeSelectImageWindow = () => {
@@ -81,6 +82,11 @@ export const SelectImageWindow = ({ formValues }) => {
                                 ))
                             }
                         </div>
+                }
+
+                {
+                    ( spinnerShown ) &&
+                        <SpinnerSearchImage />
                 }
                 
                 {

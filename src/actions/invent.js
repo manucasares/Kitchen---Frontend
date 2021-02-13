@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
+import { hideSpinner, showSpinner } from "./ui";
 
 
 
@@ -159,6 +160,8 @@ export const startSearchImages = ( search ) => {
 
     return async( dispatch ) => {
 
+        dispatch( setImagesResults( null ) );
+        dispatch( showSpinner() );
 
             // Peticion a unsplash para obtener la URL de la imagen a usar
 
@@ -169,8 +172,10 @@ export const startSearchImages = ( search ) => {
 
 
             dispatch( setImagesResults( results ) );
-
+            dispatch( hideSpinner() );
+            
         } catch (error) {
+            dispatch( hideSpinner() );
             console.log(error);
         }  
     }

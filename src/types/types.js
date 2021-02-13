@@ -24,4 +24,6 @@ export const types = {
     uiCloseNavbar: '[UI] Close navbar',
     uiToggleNavbar: '[UI] Toggle navbar',
     uiToggleSelectImage: '[UI] Toggle select image',
+    uiShowSpinner: '[UI] Show spinner',
+    uiHideSpinner: '[UI] Hide spinner',
 }

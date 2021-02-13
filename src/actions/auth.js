@@ -87,7 +87,7 @@ export const startLogout = () => {
     }
 }
 
-const checkingFinish = () => ({ type: types.authCheckingFinish })
+export const checkingFinish = () => ({ type: types.authCheckingFinish })
 
 const login = ( user ) => ({
     type: types.authLogin,

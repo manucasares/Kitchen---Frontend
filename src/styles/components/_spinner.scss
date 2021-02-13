@@ -1,21 +1,23 @@
 
-.spinner-showcase{
+.spinner-showcase {
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: darken($color: $red, $amount: 10);
+
+
 }
 
-.sk-chase {
+.spinner-showcase .sk-chase {
     width: 40px;
     height: 40px;
     position: relative;
     animation: sk-chase 2.5s infinite linear both;
 }
 
-.sk-chase-dot {
+.spinner-showcase .sk-chase .sk-chase-dot {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -24,7 +26,7 @@
     animation: sk-chase-dot 2.0s infinite ease-in-out both; 
 }
 
-.sk-chase-dot:before {
+.spinner-showcase .sk-chase .sk-chase-dot:before {
     content: '';
     display: block;
     width: 25%;

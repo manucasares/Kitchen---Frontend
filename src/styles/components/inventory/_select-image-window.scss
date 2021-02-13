@@ -60,3 +60,11 @@
         }
     }
 }
+
+@media screen and ( max-width: 750px ) {
+    .select-image-background .select-image-container .search-results .result { width: 47%; }
+}
+
+@media screen and ( max-width: 550px ) {
+    .select-image-background .select-image-container .search-results .result { width: 100%; }
+}
